@@ -20,6 +20,24 @@ function Services() {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const individualServices = [
+    { name: "Mini Bath & Brush", price: "$25", features: ["Quick gentle bath", "Light brushing", "Towel dry", "Basic finishing"] },
+    { name: "Nail Trim & Paw Care", price: "$30", features: ["Nail trimming & filing", "Paw pad moisturizing", "Fur between pads trimmed", "Injury check"] },
+    { name: "Ear Cleaning", price: "$35", features: ["Gentle ear cleaning", "Ear hair plucking", "Odor removal", "Health check"] },
+    { name: "Teeth Brushing", price: "$40", features: ["Professional teeth brushing", "Fresh breath treatment", "Tartar removal", "Gum health check"] },
+    { name: "Basic Bath & Blow-dry", price: "$45", features: ["Gentle shampoo", "Conditioner treatment", "Towel & blow-dry", "Light brush out"] },
+    { name: "Bath & Brush", price: "$50", features: ["Gentle shampoo & conditioner", "Thorough brushing", "Towel & blow-dry", "Light finishing touches"] },
+    { name: "Puppy's First Groom", price: "$55", features: ["Gentle introduction to grooming", "Light bath & brush", "Nail introduction", "Positive reinforcement"] },
+    { name: "Haircut & Styling", price: "$65", features: ["Breed-specific styling", "Custom trim & shaping", "Face & paw finishing", "Style consultation"] },
+    { name: "Senior Pet Care", price: "$70", features: ["Gentle, low-stress handling", "Arthritis-friendly grooming", "Extra padding & comfort", "Health check observations"] },
+    { name: "Spa & De-shedding", price: "$75", features: ["Deep conditioning treatment", "De-shedding treatment", "Paw balm & massage", "Pet-safe cologne spritz"] },
+    { name: "Full Grooming Package", price: "$85", features: ["Full bath & blow-dry", "Professional haircut", "Nail trimming & filing", "Ear cleaning"] },
+    { name: "Deluxe Spa Package", price: "$120", features: ["Aromatherapy bath", "Deep conditioning mask", "Paw massage & balm", "Blueberry facial & cologne"] },
+    { name: "Mobile Grooming", price: "$120", features: ["At-home convenience", "Fully equipped mobile van", "Low-stress environment", "Full grooming services"] },
+    { name: "Show Dog Preparation", price: "$200", features: ["Competition-ready styling", "Premium products", "Full spa treatment", "Expert finishing touches"] },
+    { name: "Monthly Membership", price: "$300", features: ["2 full grooms per month", "15% off additional services", "Priority booking", "Free nail trim between visits"] }
+  ];
+
   const petHomeServices = [
     { name: "Express Home Grooming", price: "$700", pets: "Up to 10 pets", time: "2 hours", features: ["Quick bath & brush", "Nail trim", "Basic ear cleaning", "On-site service"] },
     { name: "Standard Home Grooming", price: "$850", pets: "Up to 12 pets", time: "3 hours", features: ["Full bath & blow-dry", "Basic haircut", "Nail trimming", "Ear cleaning"] },
@@ -177,350 +195,49 @@ function Services() {
               </p>
             </div>
 
-            {/* Category: Individual Pet Services */}
+            {/* Category: Individual Pet Services - UPDATED WITH 15 SERVICES */}
             <div className="px-4 sm:px-10 lg:px-20 py-8">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-amber-600 flex items-center gap-2">
                   <span className="material-symbols-outlined">pets</span>
-                  Individual Pet Services
+                  Individual Pet Services (15 Services • $25 - $300)
                 </h2>
                 <p className="text-gray-600 mt-1">Premium grooming for your beloved companion</p>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {/* Individual Service 1 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">spa</span>
+                {individualServices.map((service, index) => (
+                  <div key={index} className={`bg-white p-6 border border-solid ${index === 7 ? 'border-amber-600 shadow-xl relative overflow-hidden' : index === 14 ? 'border-amber-600 shadow-xl relative overflow-hidden' : 'border-gray-200'} rounded-lg hover:shadow-xl transition-shadow`}>
+                    {index === 7 && (
+                      <div className="absolute top-0 right-0 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">POPULAR</div>
+                    )}
+                    {index === 14 && (
+                      <div className="absolute top-0 right-0 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">BEST VALUE</div>
+                    )}
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0">
+                        <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
+                          <span className="material-symbols-outlined text-amber-600">spa</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900">{service.name}</h3>
+                        <p className="text-2xl font-black text-amber-600 mt-1">{service.price}</p>
+                        <ul className="mt-3 space-y-2 text-sm text-gray-600">
+                          {service.features.map((feature, i) => (
+                            <li key={i} className="flex items-center gap-2">
+                              <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Full Grooming Package</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$85</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Full bath & blow-dry
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Professional haircut
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Nail trimming & filing
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Ear cleaning
-                        </li>
-                      </ul>
-                    </div>
                   </div>
-                </div>
-
-                {/* Individual Service 2 */}
-                <div className="bg-white p-6 border border-solid border-amber-600 rounded-lg shadow-xl relative overflow-hidden">
-                  <div className="absolute top-0 right-0 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">POPULAR</div>
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">brush</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Bath & Brush</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$50</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Gentle shampoo & conditioner
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Thorough brushing
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Towel & blow-dry
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Light finishing touches
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 3 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">content_cut</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Haircut & Styling</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$65</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Breed-specific styling
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Custom trim & shaping
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Face & paw finishing
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Style consultation
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 4 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">cleaning_services</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Spa & De-shedding</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$75</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Deep conditioning treatment
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          De-shedding treatment
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Paw balm & massage
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Pet-safe cologne spritz
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 5 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">pets</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Puppy's First Groom</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$55</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Gentle introduction to grooming
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Light bath & brush
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Nail introduction
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Positive reinforcement
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 6 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">elderly</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Senior Pet Care</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$70</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Gentle, low-stress handling
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Arthritis-friendly grooming
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Extra padding & comfort
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Health check observations
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 7 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">nail</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Nail & Paw Care</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$30</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Nail trimming & filing
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Paw pad moisturizing
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Fur between pads trimmed
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Quick check for injuries
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 8 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">earbuds</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Ear & Teeth Care</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$25</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Ear cleaning & plucking
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Teeth brushing
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Fresh breath treatment
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Health check observations
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 9 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">local_shipping</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Mobile Grooming</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$120</p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          At-home convenience
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Fully equipped mobile van
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Low-stress environment
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Full grooming services
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Individual Service 10 */}
-                <div className="bg-white p-6 border border-solid border-gray-200 rounded-lg hover:shadow-xl transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0">
-                      <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                        <span className="material-symbols-outlined text-amber-600">calendar_month</span>
-                      </div>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">Monthly Membership</h3>
-                      <p className="text-2xl font-black text-amber-600 mt-1">$180<span className="text-sm font-normal text-gray-500">/mo</span></p>
-                      <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          1 full groom per month
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          10% off additional services
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Priority booking
-                        </li>
-                        <li className="flex items-center gap-2">
-                          <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                          Free nail trim between visits
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
-            {/* Category: Pet Home Services - UPDATED WITH 15 SERVICES */}
+            {/* Category: Pet Home Services */}
             <div className="px-4 sm:px-10 lg:px-20 py-8 bg-gray-50">
               <div className="mb-6">
                 <h2 className="text-2xl font-bold text-amber-600 flex items-center gap-2">
@@ -563,11 +280,11 @@ function Services() {
             {/* Total Services Counter */}
             <div className="px-4 sm:px-10 lg:px-20 py-8">
               <div className="bg-amber-50 rounded-lg p-8 text-center border border-amber-200">
-                <h3 className="text-2xl font-bold text-gray-900">25 Premium Grooming Services Available</h3>
+                <h3 className="text-2xl font-bold text-gray-900">30 Premium Grooming Services Available</h3>
                 <p className="text-gray-600 mt-2">From individual pampering to full-scale pet home services</p>
                 <div className="flex flex-wrap justify-center gap-8 mt-4">
                   <div>
-                    <span className="text-3xl font-black text-amber-600">10</span>
+                    <span className="text-3xl font-black text-amber-600">15</span>
                     <p className="text-sm text-gray-600">Individual Services</p>
                   </div>
                   <div>
@@ -575,7 +292,7 @@ function Services() {
                     <p className="text-sm text-gray-600">Pet Home Services</p>
                   </div>
                   <div>
-                    <span className="text-3xl font-black text-amber-600">$700</span>
+                    <span className="text-3xl font-black text-amber-600">$25</span>
                     <p className="text-sm text-gray-600">Starting Price</p>
                   </div>
                   <div>
