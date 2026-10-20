@@ -9,16 +9,13 @@ function Services() {
   const handleNavClick = (path) => {
     setIsNavigating(true);
     setIsMobileMenuOpen(false);
-    
     setTimeout(() => {
       navigate(path);
       setIsNavigating(false);
     }, 300);
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   const individualServices = [
     { name: "Mini Bath & Brush", price: "$25", features: ["Quick gentle bath", "Light brushing", "Towel dry", "Basic finishing"] },
@@ -56,337 +53,411 @@ function Services() {
     { name: "Diamond Home Grooming Package", price: "$2,500", pets: "Up to 35 pets", time: "Full Day", features: ["Ultimate luxury service", "Special styling", "Premium treatments", "VIP finishing touches"] }
   ];
 
-  return (
-    <div className="bg-white font-display text-gray-900">
-      <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@400;500;700;800&display=swap" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-      
-      <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
-        <div className="layout-container flex h-full grow flex-col">
-          {/* Header */}
-          <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm">
-            <div className="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-gray-200 px-4 sm:px-10 lg:px-20 py-3">
-              <div className="flex items-center gap-4 text-gray-900">
-                <Link 
-                  to="/" 
-                  onClick={() => handleNavClick('/')}
-                  className="flex items-center gap-4 hover:opacity-80 transition-opacity"
-                >
-                  <div className="size-8 text-amber-600">
-                    <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                      <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
-                      <path d="M13 8h-2v5h5v-2h-3z"/>
-                    </svg>
-                  </div>
-                  <h2 className="text-gray-900 text-lg font-bold leading-tight tracking-[-0.015em]">Matthew's Pet Atelier</h2>
-                </Link>
-              </div>
-              <div className="hidden lg:flex flex-1 justify-end gap-8">
-                <div className="flex items-center gap-9">
-                  <Link 
-                    to="/" 
-                    onClick={() => handleNavClick('/')}
-                    className="text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors"
-                  >
-                    Home
-                  </Link>
-                  <span className="text-amber-600 text-sm font-bold leading-normal">Services</span>
-                  <Link 
-                    to="/AboutMe" 
-                    onClick={() => handleNavClick('/AboutMe')}
-                    className="text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors"
-                  >
-                    About
-                  </Link>
-                  <Link 
-                    to="/Contact" 
-                    onClick={() => handleNavClick('/Contact')}
-                    className="text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors"
-                  >
-                    Contact
-                  </Link>
-                  <Link 
-                    to="/Testimonials" 
-                    onClick={() => handleNavClick('/Testimonials')}
-                    className="text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors"
-                  >
-                    Testimonials
-                  </Link>
-                </div>
-                <Link 
-                  to="/Contact" 
-                  onClick={() => handleNavClick('/Contact')}
-                  className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-amber-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-amber-700 transition-all"
-                >
-                  <span className="truncate">Book Now</span>
-                </Link>
-              </div>
-              {/* Mobile Menu Button */}
-              <div className="lg:hidden">
-                <button 
-                  onClick={toggleMobileMenu}
-                  className="text-gray-900 p-2"
-                >
-                  <span className="material-symbols-outlined">
-                    {isMobileMenuOpen ? 'close' : 'menu'}
-                  </span>
-                </button>
-              </div>
+  const featuredIndexIndividual = 7; // Haircut & Styling (POPULAR)
+  const featuredIndexHome = 7;       // Spa Day Home Package (BEST VALUE)
+
+  const renderServiceCard = (service, index, featuredIndex, kind) => {
+    const isFeatured = index === featuredIndex;
+    const featuredLabel = kind === 'individual' ? 'POPULAR' : 'BEST VALUE';
+    const icon = kind === 'individual' ? 'spa' : 'home_work';
+
+    if (isFeatured) {
+      return (
+        <div key={index} className="relative flex flex-col rounded-3xl bg-gradient-to-br from-teal-700 to-teal-900 text-white p-6 shadow-2xl shadow-teal-900/20 overflow-hidden">
+          <div className="absolute -top-10 -right-10 size-32 rounded-full bg-teal-600/40" />
+          <div className="absolute -bottom-10 -left-10 size-32 rounded-full bg-orange-500/20" />
+
+          <div className="relative flex items-start justify-between gap-2 mb-3">
+            <div className="size-10 rounded-xl bg-white/15 flex items-center justify-center">
+              <span className="material-symbols-outlined text-white" style={{ fontVariationSettings: "'FILL' 1" }}>{icon}</span>
             </div>
-            
-            {/* Mobile Navigation Menu */}
+            <span className="bg-orange-500 text-white text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full">
+              {featuredLabel}
+            </span>
+          </div>
+
+          <div className="relative">
+            <h3 className="text-lg font-extrabold leading-tight">{service.name}</h3>
+            <p className="mt-2 flex items-baseline gap-1">
+              <span className="text-3xl font-extrabold tracking-tight">{service.price}</span>
+              {service.time && <span className="text-xs font-semibold text-teal-100">· {service.time}</span>}
+            </p>
+            {service.pets && <p className="text-xs text-teal-200 mt-0.5">{service.pets}</p>}
+          </div>
+
+          <ul className="relative mt-4 space-y-2 text-sm text-teal-50">
+            {service.features.map((feature, i) => (
+              <li key={i} className="flex items-start gap-2">
+                <span className="material-symbols-outlined text-orange-300 text-sm mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+
+          <Link
+            to="/Contact"
+            onClick={() => handleNavClick('/Contact')}
+            className="mt-5 inline-flex items-center justify-center gap-2 rounded-full h-10 px-5 bg-white text-teal-800 text-sm font-bold hover:bg-orange-50 transition-all"
+          >
+            Book this
+            <span className="material-symbols-outlined text-base">arrow_forward</span>
+          </Link>
+        </div>
+      );
+    }
+
+    return (
+      <div key={index} className="group flex flex-col rounded-3xl bg-white border border-stone-200 p-6 hover:border-teal-300 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+        <div className="flex items-start justify-between gap-2 mb-3">
+          <div className={`size-10 rounded-xl flex items-center justify-center ${index % 2 === 0 ? 'bg-teal-50' : 'bg-orange-50'}`}>
+            <span
+              className={`material-symbols-outlined ${index % 2 === 0 ? 'text-teal-700' : 'text-orange-500'}`}
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              {icon}
+            </span>
+          </div>
+          <span className="rounded-full bg-teal-50 text-teal-800 border border-teal-100 px-3 py-1 text-xs font-extrabold">
+            {service.price}
+          </span>
+        </div>
+
+        <h3 className="text-base font-extrabold text-stone-900 leading-tight">{service.name}</h3>
+        {service.pets && (
+          <p className="text-xs text-stone-500 mt-1">{service.pets} · {service.time}</p>
+        )}
+
+        <ul className="mt-3 space-y-1.5 text-sm text-stone-600 flex-1">
+          {service.features.map((feature, i) => (
+            <li key={i} className="flex items-start gap-2">
+              <span className="material-symbols-outlined text-teal-700 text-sm mt-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        <Link
+          to="/Contact"
+          onClick={() => handleNavClick('/Contact')}
+          className="mt-4 inline-flex items-center justify-center gap-1.5 rounded-full h-9 px-4 border border-stone-300 text-stone-800 text-xs font-bold group-hover:border-teal-700 group-hover:text-teal-700 transition-all"
+        >
+          Book this
+          <span className="material-symbols-outlined text-sm">arrow_forward</span>
+        </Link>
+      </div>
+    );
+  };
+
+  return (
+    <div className="bg-stone-50 font-sans text-stone-900">
+      <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+      <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+        <div className="layout-container flex h-full grow flex-col">
+          {/* ============ HEADER ============ */}
+          <header className="sticky top-0 z-50 bg-stone-50/90 backdrop-blur-md border-b border-stone-200">
+            <div className="flex items-center justify-between whitespace-nowrap px-4 sm:px-10 lg:px-20 py-3">
+              <Link to="/" onClick={() => handleNavClick('/')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                <div className="size-10 rounded-2xl bg-teal-700 flex items-center justify-center shadow-lg shadow-teal-700/20">
+                  <span className="material-symbols-outlined text-white text-xl" style={{ fontVariationSettings: "'FILL' 1" }}>pets</span>
+                </div>
+                <div className="flex flex-col leading-none">
+                  <h2 className="text-stone-900 text-base font-extrabold tracking-tight">Matthew's</h2>
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-teal-700">Pet Atelier</span>
+                </div>
+              </Link>
+
+              <div className="hidden lg:flex flex-1 justify-end items-center gap-8">
+                <nav className="flex items-center gap-8">
+                  <Link to="/" onClick={() => handleNavClick('/')} className="text-stone-600 text-sm font-medium hover:text-teal-700 transition-colors">Home</Link>
+                  <span className="text-teal-700 text-sm font-bold">Services</span>
+                  <Link to="/AboutMe" onClick={() => handleNavClick('/AboutMe')} className="text-stone-600 text-sm font-medium hover:text-teal-700 transition-colors">About</Link>
+                  <Link to="/Contact" onClick={() => handleNavClick('/Contact')} className="text-stone-600 text-sm font-medium hover:text-teal-700 transition-colors">Contact</Link>
+                  <Link to="/Testimonials" onClick={() => handleNavClick('/Testimonials')} className="text-stone-600 text-sm font-medium hover:text-teal-700 transition-colors">Testimonials</Link>
+                </nav>
+                <Link to="/Contact" onClick={() => handleNavClick('/Contact')} className="rounded-full px-6 py-2.5 bg-orange-500 text-white text-sm font-bold shadow-lg shadow-orange-500/25 hover:bg-orange-600 transition-all">
+                  Book Now
+                </Link>
+              </div>
+
+              <button onClick={toggleMobileMenu} className="lg:hidden text-stone-900 p-2">
+                <span className="material-symbols-outlined">{isMobileMenuOpen ? 'close' : 'menu'}</span>
+              </button>
+            </div>
+
             {isMobileMenuOpen && (
-              <div className="lg:hidden bg-white border-b border-gray-200 shadow-lg">
-                <div className="px-4 py-6 space-y-4">
-                  <div className="space-y-3">
-                    <Link 
-                      to="/" 
-                      onClick={() => handleNavClick('/')}
-                      className="block px-2 py-3 text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors"
-                    >
-                      Home
+              <div className="lg:hidden bg-stone-50 border-t border-stone-200 shadow-lg">
+                <div className="px-6 py-6 space-y-1">
+                  {[
+                    { to: '/', label: 'Home' },
+                    { to: '/Services', label: 'Services', active: true },
+                    { to: '/AboutMe', label: 'About' },
+                    { to: '/Contact', label: 'Contact' },
+                    { to: '/Testimonials', label: 'Testimonials' },
+                  ].map((item) => (
+                    <Link key={item.label} to={item.to} onClick={() => handleNavClick(item.to)}
+                      className={`block px-3 py-3 rounded-xl text-sm font-medium transition-colors ${
+                        item.active ? 'text-teal-700 bg-teal-50 font-bold' : 'text-stone-700 hover:bg-stone-100'
+                      }`}>
+                      {item.label}
                     </Link>
-                    <div className="px-2 py-3 border-t border-gray-100">
-                      <span className="text-amber-600 text-sm font-bold leading-normal">Services</span>
-                    </div>
-                    <Link 
-                      to="/AboutMe" 
-                      onClick={() => handleNavClick('/AboutMe')}
-                      className="block px-2 py-3 text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors border-t border-gray-100"
-                    >
-                      About
-                    </Link>
-                    <Link 
-                      to="/Contact" 
-                      onClick={() => handleNavClick('/Contact')}
-                      className="block px-2 py-3 text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors border-t border-gray-100"
-                    >
-                      Contact
-                    </Link>
-                    <Link 
-                      to="/Testimonials" 
-                      onClick={() => handleNavClick('/Testimonials')}
-                      className="block px-2 py-3 text-gray-900 text-sm font-medium leading-normal hover:text-amber-600 transition-colors border-t border-gray-100"
-                    >
-                      Testimonials
-                    </Link>
-                  </div>
-                  <Link 
-                    to="/Contact" 
-                    onClick={() => handleNavClick('/Contact')}
-                    className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-amber-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-amber-700 transition-all mt-4"
-                  >
-                    <span className="truncate">Book Now</span>
+                  ))}
+                  <Link to="/Contact" onClick={() => handleNavClick('/Contact')}
+                    className="block text-center rounded-full mt-3 px-6 py-3 bg-orange-500 text-white text-sm font-bold shadow-lg shadow-orange-500/25">
+                    Book Now
                   </Link>
                 </div>
               </div>
             )}
           </header>
 
-          {/* Main Content */}
           <main className="flex-1">
-            {/* Hero Section */}
-            <div className="px-4 sm:px-10 lg:px-20 py-12 bg-gradient-to-r from-amber-50 to-white">
-              <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4">Our Premium Grooming Services</h1>
-              <p className="text-gray-600 text-lg max-w-2xl">
-                From individual pampering to full-scale pet home services, we provide expert care for every furry friend.
-              </p>
-            </div>
+            {/* ============ HERO ============ */}
+            <section className="px-4 sm:px-10 lg:px-20 pt-12 pb-8">
+              <div className="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-7 flex flex-col gap-5">
+                  <span className="inline-flex w-fit items-center gap-2 rounded-full bg-teal-100 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-teal-700">
+                    <span className="size-1.5 rounded-full bg-teal-700" />
+                    30 services · 2 categories
+                  </span>
+                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight text-stone-900">
+                    Our Premium <span className="text-teal-700">Grooming</span> Services
+                  </h1>
+                  <p className="text-lg text-stone-600 max-w-lg leading-relaxed">
+                    From individual pampering to full-scale pet home services, we provide expert care for every furry friend.
+                  </p>
 
-            {/* Category: Individual Pet Services - UPDATED WITH 15 SERVICES */}
-            <div className="px-4 sm:px-10 lg:px-20 py-8">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-amber-600 flex items-center gap-2">
-                  <span className="material-symbols-outlined">pets</span>
-                  Individual Pet Services (15 Services • $25 - $300)
-                </h2>
-                <p className="text-gray-600 mt-1">Premium grooming for your beloved companion</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {individualServices.map((service, index) => (
-                  <div key={index} className={`bg-white p-6 border border-solid ${index === 7 ? 'border-amber-600 shadow-xl relative overflow-hidden' : index === 14 ? 'border-amber-600 shadow-xl relative overflow-hidden' : 'border-gray-200'} rounded-lg hover:shadow-xl transition-shadow`}>
-                    {index === 7 && (
-                      <div className="absolute top-0 right-0 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">POPULAR</div>
-                    )}
-                    {index === 14 && (
-                      <div className="absolute top-0 right-0 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">BEST VALUE</div>
-                    )}
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0">
-                        <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                          <span className="material-symbols-outlined text-amber-600">spa</span>
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-900">{service.name}</h3>
-                        <p className="text-2xl font-black text-amber-600 mt-1">{service.price}</p>
-                        <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                          {service.features.map((feature, i) => (
-                            <li key={i} className="flex items-center gap-2">
-                              <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Category: Pet Home Services */}
-            <div className="px-4 sm:px-10 lg:px-20 py-8 bg-gray-50">
-              <div className="mb-6">
-                <h2 className="text-2xl font-bold text-amber-600 flex items-center gap-2">
-                  <span className="material-symbols-outlined">home</span>
-                  Pet Home Services (15 Services • $700 - $2,500)
-                </h2>
-                <p className="text-gray-600 mt-1">Full-service grooming for pet homes, shelters, and boarding facilities</p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {petHomeServices.map((service, index) => (
-                  <div key={index} className={`bg-white p-6 border border-solid ${index === 7 ? 'border-amber-600 shadow-xl relative overflow-hidden' : 'border-gray-200'} rounded-lg hover:shadow-xl transition-shadow`}>
-                    {index === 7 && (
-                      <div className="absolute top-0 right-0 bg-amber-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">BEST VALUE</div>
-                    )}
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0">
-                        <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
-                          <span className="material-symbols-outlined text-amber-600">pets</span>
-                        </div>
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-900">{service.name}</h3>
-                        <p className="text-2xl font-black text-amber-600 mt-1">{service.price}</p>
-                        <p className="text-sm text-gray-500">{service.pets} • {service.time}</p>
-                        <ul className="mt-3 space-y-2 text-sm text-gray-600">
-                          {service.features.map((feature, i) => (
-                            <li key={i} className="flex items-center gap-2">
-                              <span className="material-symbols-outlined text-amber-600 text-sm">check_circle</span>
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Total Services Counter */}
-            <div className="px-4 sm:px-10 lg:px-20 py-8">
-              <div className="bg-amber-50 rounded-lg p-8 text-center border border-amber-200">
-                <h3 className="text-2xl font-bold text-gray-900">30 Premium Grooming Services Available</h3>
-                <p className="text-gray-600 mt-2">From individual pampering to full-scale pet home services</p>
-                <div className="flex flex-wrap justify-center gap-8 mt-4">
-                  <div>
-                    <span className="text-3xl font-black text-amber-600">15</span>
-                    <p className="text-sm text-gray-600">Individual Services</p>
-                  </div>
-                  <div>
-                    <span className="text-3xl font-black text-amber-600">15</span>
-                    <p className="text-sm text-gray-600">Pet Home Services</p>
-                  </div>
-                  <div>
-                    <span className="text-3xl font-black text-amber-600">$25</span>
-                    <p className="text-sm text-gray-600">Starting Price</p>
-                  </div>
-                  <div>
-                    <span className="text-3xl font-black text-amber-600">$2,500</span>
-                    <p className="text-sm text-gray-600">Premium Package</p>
+                  {/* Quick jump */}
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    <a href="#individual" className="inline-flex items-center gap-2 rounded-full bg-white border border-stone-300 px-5 py-2.5 text-sm font-bold text-stone-800 hover:border-teal-700 hover:text-teal-700 transition-all">
+                      <span className="material-symbols-outlined text-base">spa</span>
+                      Individual Services
+                    </a>
+                    <a href="#home-services" className="inline-flex items-center gap-2 rounded-full bg-white border border-stone-300 px-5 py-2.5 text-sm font-bold text-stone-800 hover:border-orange-500 hover:text-orange-500 transition-all">
+                      <span className="material-symbols-outlined text-base">home</span>
+                      Pet Home Services
+                    </a>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* CTA Section */}
-            <div className="px-4 sm:px-10 lg:px-20 py-16 border-t border-solid border-gray-200 text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Ready to Book Your Pet's Grooming?</h2>
-              <p className="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
-                Schedule your appointment today and give your furry friend the premium care they deserve.
-              </p>
-              <Link 
-                to="/Contact" 
-                onClick={() => handleNavClick('/Contact')}
-                className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-amber-600 text-white text-base font-bold leading-normal tracking-[0.015em] mx-auto hover:bg-amber-700 transition-all"
-              >
-                <span className="truncate">Book Your Grooming Session</span>
-              </Link>
-            </div>
-
-            {/* Contact Details Section */}
-            <section className="bg-gray-50 border-t border-solid border-gray-200 mt-16">
-              <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
-                  <div className="md:col-span-1">
-                    <h3 className="text-lg font-bold text-gray-900">Contact Matthew</h3>
-                    <div className="mt-4 space-y-2 text-gray-600">
-                      <p className="flex items-center justify-center md:justify-start">
-                        <span className="material-symbols-outlined mr-2 text-amber-600">email</span>
-                        <span>Matthews.Pet.Atelier@consultant.com</span>
-                      </p>
-                      <p className="flex items-center justify-center md:justify-start">
-                        <span className="material-symbols-outlined mr-2 text-amber-600">phone</span>
-                        <span>+1 (916) 604-4908</span>
-                      </p>
-                      <p className="flex items-center justify-center md:justify-start">
-                        <span className="material-symbols-outlined mr-2 text-amber-600">location_on</span>
-                        <span>620 SW 19th St<br />San Antonio, TX 78207</span>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="md:col-span-2">
-                    <h3 className="text-lg font-bold text-gray-900">Studio Hours</h3>
-                    <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-gray-600">
-                      <p><strong>Monday - Friday:</strong> 8:00 AM - 7:00 PM</p>
-                      <p><strong>Saturday:</strong> 9:00 AM - 5:00 PM</p>
-                      <p><strong>Sunday:</strong> Closed</p>
-                      <p><strong>Mobile Service:</strong> By appointment only</p>
-                    </div>
-                    <div className="mt-6">
-                      <div className="flex justify-center md:justify-start space-x-4">
+                {/* Stat chips */}
+                <div className="lg:col-span-5 grid grid-cols-2 gap-3">
+                  {[
+                    { value: '15', label: 'Individual Services', accent: 'teal' },
+                    { value: '15', label: 'Home Services', accent: 'orange' },
+                    { value: '$25', label: 'Starting Price', accent: 'teal' },
+                    { value: '$2,500', label: 'Premium Package', accent: 'orange' },
+                  ].map((s) => (
+                    <div key={s.label} className="rounded-2xl bg-white border border-stone-200 p-4 hover:shadow-md transition-shadow">
+                      <div className={`text-2xl font-extrabold tracking-tight ${s.accent === 'teal' ? 'text-teal-700' : 'text-orange-500'}`}>
+                        {s.value}
                       </div>
+                      <div className="text-xs text-stone-500 mt-0.5">{s.label}</div>
                     </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* ============ INDIVIDUAL PET SERVICES ============ */}
+            <section id="individual" className="px-4 sm:px-10 lg:px-20 py-12">
+              <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                  <div>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-teal-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-teal-700">
+                      <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>spa</span>
+                      Category 01
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight mt-2">
+                      Individual Pet Services
+                    </h2>
+                    <p className="text-stone-600 text-sm mt-1">Premium grooming for your beloved companion</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full bg-white border border-stone-200 px-3 py-1.5 text-xs font-semibold text-stone-700">15 Services</span>
+                    <span className="rounded-full bg-white border border-stone-200 px-3 py-1.5 text-xs font-semibold text-stone-700">$25 – $300</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {individualServices.map((service, index) =>
+                    renderServiceCard(service, index, featuredIndexIndividual, 'individual')
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {/* ============ PET HOME SERVICES ============ */}
+            <section id="home-services" className="px-4 sm:px-10 lg:px-20 py-12 bg-white border-y border-stone-200">
+              <div className="max-w-7xl mx-auto">
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+                  <div>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-orange-600">
+                      <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>home</span>
+                      Category 02
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight mt-2">
+                      Pet Home Services
+                    </h2>
+                    <p className="text-stone-600 text-sm mt-1">Full-service grooming for pet homes, shelters, and boarding facilities</p>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    <span className="rounded-full bg-white border border-stone-200 px-3 py-1.5 text-xs font-semibold text-stone-700">15 Services</span>
+                    <span className="rounded-full bg-white border border-stone-200 px-3 py-1.5 text-xs font-semibold text-stone-700">$700 – $2,500</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {petHomeServices.map((service, index) =>
+                    renderServiceCard(service, index, featuredIndexHome, 'home')
+                  )}
+                </div>
+              </div>
+            </section>
+
+            {/* ============ TOTALS / STATS ============ */}
+            <section className="px-4 sm:px-10 lg:px-20 py-16">
+              <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-teal-700 to-teal-900 text-white p-8 sm:p-12 relative overflow-hidden">
+                <div className="absolute -top-20 -right-20 size-64 rounded-full bg-orange-500/20 blur-3xl" />
+                <div className="absolute -bottom-20 -left-20 size-64 rounded-full bg-teal-400/20 blur-3xl" />
+
+                <div className="relative text-center">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-orange-300">
+                    <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>workspace_premium</span>
+                    Full Catalogue
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight mt-3">30 Premium Grooming Services Available</h3>
+                  <p className="text-teal-100 mt-2 max-w-xl mx-auto">From individual pampering to full-scale pet home services</p>
+
+                  <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {[
+                      { value: '15', label: 'Individual Services' },
+                      { value: '15', label: 'Pet Home Services' },
+                      { value: '$25', label: 'Starting Price' },
+                      { value: '$2,500', label: 'Premium Package' },
+                    ].map((s) => (
+                      <div key={s.label} className="rounded-2xl bg-white/10 border border-white/15 px-4 py-4 backdrop-blur-sm">
+                        <div className="text-3xl font-extrabold tracking-tight text-white">{s.value}</div>
+                        <div className="text-xs text-teal-200 mt-1">{s.label}</div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Footer */}
-            <footer className="bg-gray-100 text-gray-700 border-t border-gray-200">
-              <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
-                <div className="flex justify-center">
-                  <a 
-                    href="https://www.instagram.com/matthewspetatelier" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-gray-600 hover:text-amber-600 transition-colors"
-                    aria-label="Instagram"
-                  >
-                    <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+            {/* ============ CTA ============ */}
+            <section className="px-4 sm:px-10 lg:px-20 pb-20">
+              <div className="max-w-4xl mx-auto text-center">
+                <span className="material-symbols-outlined text-orange-500 text-4xl mb-3" style={{ fontVariationSettings: "'FILL' 1" }}>pets</span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
+                  Ready to Book Your Pet's Grooming?
+                </h2>
+                <p className="mt-4 text-lg text-stone-600 max-w-2xl mx-auto leading-relaxed">
+                  Schedule your appointment today and give your furry friend the premium care they deserve.
+                </p>
+                <Link
+                  to="/Contact"
+                  onClick={() => handleNavClick('/Contact')}
+                  className="mt-8 inline-flex items-center justify-center gap-2 rounded-full h-12 px-8 bg-orange-500 text-white text-sm font-bold shadow-lg shadow-orange-500/25 hover:bg-orange-600 transition-all"
+                >
+                  Book Your Grooming Session
+                  <span className="material-symbols-outlined text-lg">arrow_forward</span>
+                </Link>
+              </div>
+            </section>
+
+            {/* ============ CONTACT DETAILS ============ */}
+            <section className="bg-white border-t border-stone-200">
+              <div className="max-w-7xl mx-auto py-14 px-4 sm:px-10 lg:px-20">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                  <div>
+                    <h3 className="text-lg font-extrabold text-stone-900">Contact Matthew</h3>
+                    <div className="mt-5 space-y-3 text-stone-600 text-sm">
+                      <p className="flex items-center gap-3">
+                        <span className="size-9 rounded-xl bg-teal-50 flex items-center justify-center">
+                          <span className="material-symbols-outlined text-teal-700 text-base">email</span>
+                        </span>
+                        Matthews.Pet.Atelier@consultant.com
+                      </p>
+                      <p className="flex items-center gap-3">
+                        <span className="size-9 rounded-xl bg-teal-50 flex items-center justify-center">
+                          <span className="material-symbols-outlined text-teal-700 text-base">phone</span>
+                        </span>
+                        +1 (916) 604-4908
+                      </p>
+                      <p className="flex items-start gap-3">
+                        <span className="size-9 rounded-xl bg-teal-50 flex items-center justify-center shrink-0">
+                          <span className="material-symbols-outlined text-teal-700 text-base">location_on</span>
+                        </span>
+                        <span>620 SW 19th St<br />San Antonio, TX 78207</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="md:col-span-2">
+                    <h3 className="text-lg font-extrabold text-stone-900">Studio Hours</h3>
+                    <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-stone-600">
+                      <p className="flex justify-between border-b border-stone-100 pb-2"><span className="font-semibold text-stone-800">Mon – Fri</span> 8:00 AM – 7:00 PM</p>
+                      <p className="flex justify-between border-b border-stone-100 pb-2"><span className="font-semibold text-stone-800">Saturday</span> 9:00 AM – 5:00 PM</p>
+                      <p className="flex justify-between border-b border-stone-100 pb-2"><span className="font-semibold text-stone-800">Sunday</span> <span className="text-orange-500 font-semibold">Closed</span></p>
+                      <p className="flex justify-between border-b border-stone-100 pb-2"><span className="font-semibold text-stone-800">Mobile Service</span> By appointment</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          {/* ============ FOOTER ============ */}
+          <footer className="bg-teal-950 text-teal-100">
+            <div className="mx-auto max-w-7xl px-6 py-14 lg:px-20">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <div>
+                  <div className="flex items-center gap-3">
+                    <div className="size-10 rounded-2xl bg-orange-500 flex items-center justify-center">
+                      <span className="material-symbols-outlined text-white" style={{ fontVariationSettings: "'FILL' 1" }}>pets</span>
+                    </div>
+                    <div>
+                      <div className="font-extrabold text-white">Matthew's</div>
+                      <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-orange-400">Pet Atelier</div>
+                    </div>
+                  </div>
+                  <p className="mt-4 text-sm text-teal-300/80 max-w-xs">Premium grooming for pets who deserve the very best.</p>
+                  <a href="https://www.instagram.com/matthewspetatelier" target="_blank" rel="noopener noreferrer"
+                    className="mt-5 inline-flex items-center gap-2 text-sm text-teal-200 hover:text-orange-400 transition-colors">
+                    <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.948-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
                     </svg>
-                    <span className="text-sm font-medium">Our Instagram</span>
+                    Our Instagram
                   </a>
                 </div>
 
-                <div className="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm">
-                  <Link to="/AboutMe" onClick={() => handleNavClick('/AboutMe')} className="hover:text-amber-600 transition-colors">About</Link>
-                  <Link to="/Contact" onClick={() => handleNavClick('/Contact')} className="hover:text-amber-600 transition-colors">Contact</Link>
-                  <Link to="/PrivacyPolicy" onClick={() => handleNavClick('/PrivacyPolicy')} className="hover:text-amber-600 transition-colors">Privacy Policy</Link>
-                  <Link to="/RefundPolicy" onClick={() => handleNavClick('/RefundPolicy')} className="hover:text-amber-600 transition-colors">Refund Policy</Link>
-                </div>
-
-                <div className="mt-8 text-center">
-                  <p className="text-xs leading-5 text-gray-500">© {new Date().getFullYear()} Matthew's Pet Atelier. All rights reserved.</p>
+                <div className="md:col-span-2 flex flex-col md:flex-row gap-10 md:justify-end">
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-orange-400 mb-4">Explore</h4>
+                    <ul className="space-y-2.5 text-sm">
+                      <li><Link to="/AboutMe" onClick={() => handleNavClick('/AboutMe')} className="hover:text-orange-400 transition-colors">About</Link></li>
+                      <li><Link to="/Contact" onClick={() => handleNavClick('/Contact')} className="hover:text-orange-400 transition-colors">Contact</Link></li>
+                      <li><Link to="/Testimonials" onClick={() => handleNavClick('/Testimonials')} className="hover:text-orange-400 transition-colors">Testimonials</Link></li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-orange-400 mb-4">Legal</h4>
+                    <ul className="space-y-2.5 text-sm">
+                      <li><Link to="/PrivacyPolicy" onClick={() => handleNavClick('/PrivacyPolicy')} className="hover:text-orange-400 transition-colors">Privacy Policy</Link></li>
+                      <li><Link to="/RefundPolicy" onClick={() => handleNavClick('/RefundPolicy')} className="hover:text-orange-400 transition-colors">Refund Policy</Link></li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </footer>
-          </main>
+
+              <div className="mt-12 pt-6 border-t border-teal-800/70 flex flex-col sm:flex-row justify-between items-center gap-3">
+                <p className="text-xs text-teal-400">© {new Date().getFullYear()} Matthew's Pet Atelier. All rights reserved.</p>
+                <p className="text-xs text-teal-500">Crafted with care for pets & their people.</p>
+              </div>
+            </div>
+          </footer>
         </div>
       </div>
 
@@ -394,6 +465,7 @@ function Services() {
         .material-symbols-outlined {
           font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+        html { scroll-behavior: smooth; }
       `}</style>
     </div>
   );
